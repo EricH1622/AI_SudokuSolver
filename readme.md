@@ -14,7 +14,7 @@ This project was created for our Introduction to Artificial Intelligence course.
 ### Requirements
 1. Python. The latest version can be downloaded and installed from the official Python website (https://www.python.org/)
 
-To run the program simply run the following command: `python3 main.py` and the Tkinter GUI window will open.
+To run the program navigate to the folder in which the project is saved in and run the following command: `python3 main.py` and the Tkinter GUI window will open.
 
 
 ## Algorithm Notes
