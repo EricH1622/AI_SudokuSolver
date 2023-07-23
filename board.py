@@ -7,18 +7,18 @@ from gridhelper import GridHelper
 
 
 class Square:
-    def __init__(self, value: int, position: (int, int)):
+    def __init__(self, value, position):
         """
         Creates a Square object which contains the domain of potential values
         and the value that it was given on the board.
         """
-        self._value: int = value  # value of the square
-        self._domain: list[int] = []  # possible values for an unassigned square
-        self._prev_domain: list[[int]] = []  # values previously used for domain
-        self._constraints: list[Square] = []  # list of neighbouring squares
-        self._position: (int, int) = position
+        self._value = value  # value of the square
+        self._domain = []  # possible values for an unassigned square
+        self._prev_domain = []  # values previously used for domain
+        self._constraints = []  # list of neighbouring squares
+        self._position = position
 
-    def add_to_domain(self, value: int):
+    def add_to_domain(self, value):
         """
         Adds the potential values to the domain.
 
@@ -27,7 +27,7 @@ class Square:
         if value not in self._domain:
             self._domain.append(value)
 
-    def add_constraint(self, *squares: 'Square'):
+    def add_constraint(self, *squares):
         """
         Adds a constraint to a Square's constraint list.
 
@@ -47,7 +47,7 @@ class Square:
                f"\nConstraints:{self.constraints}"
 
     @property
-    def value(self) -> int:
+    def value(self):
         """
         Retrieves a Square's value.
 
@@ -91,7 +91,7 @@ class Square:
             self._domain.append(prev_domain)
 
     @property
-    def domain(self) -> list[int]:
+    def domain(self):
         """
         Retrieves the domain of the Square.
 
@@ -100,7 +100,7 @@ class Square:
         return self._domain
 
     @domain.setter
-    def domain(self, values: list[int]):
+    def domain(self, values):
         """
         Sets the domain of the Square.
 
@@ -118,7 +118,7 @@ class Square:
         return self._prev_domain
 
     @property
-    def domain_size(self) -> int:
+    def domain_size(self):
         """
         Retrieves the size of the Square's domain.
 
@@ -127,7 +127,7 @@ class Square:
         return len(self._domain)
 
     @property
-    def position(self) -> (int, int):
+    def position(self):
         """
         Retrieves the square's position on the sudoku board as an (x,y) coordinate.
 
@@ -136,7 +136,7 @@ class Square:
         return self._position
 
     @property
-    def row(self) -> int:
+    def row(self):
         """
         Retreives the row in which the Square exists on the sudoku board.
 
@@ -145,7 +145,7 @@ class Square:
         return self._position[0]
 
     @property
-    def col(self) -> int:
+    def col(self):
         """
         Retrieves the column in which the Square exists on the sudoku board.
 
@@ -154,7 +154,7 @@ class Square:
         return self._position[1]
 
     @property
-    def constraints(self) -> list['Square']:
+    def constraints(self):
         """
         Retrieves the Square's constraints.
 
@@ -163,7 +163,7 @@ class Square:
         """
         return self._constraints
 
-    def constraints_to_str(self) -> str:
+    def constraints_to_str(self):
         """
         Converts a Square's constraints into a human-readable string.
 
@@ -174,7 +174,7 @@ class Square:
             constraints_str += str(constraints.position)
         return constraints_str
 
-    def count_unassigned_constraints(self) -> int:
+    def count_unassigned_constraints(self):
         """
         Determine the number of constraints acting on a Square.
 
@@ -186,14 +186,14 @@ class Square:
 
 class Board:
 
-    def __init__(self, sudoku_grid: list):
+    def __init__(self, sudoku_grid):
         """
         Creates a board of Squares, all in the locations they exist in the sudoku_grid.
         """
         self._grid = sudoku_grid
         self._subgrid_count, self._rows_in_subgrid, self._cols_in_subgrid = GridHelper.initialize_grid_counts(
             self._grid)
-        self._squares: list[list[Square]] = []
+        self._squares = []
         self._generate_squares()
         self._populate_constraints()
         self._states = [[(Square, int)]]  # stores changes that occurred during MAC for restoration
@@ -211,7 +211,7 @@ class Board:
                                                                    self._rows_in_subgrid,
                                                                    self._cols_in_subgrid))
 
-    def get_row_neighbours(self, row: int):
+    def get_row_neighbours(self, row):
         """
         Returns a list of Squares representing a full row of the sudoku grid.
 
@@ -220,7 +220,7 @@ class Board:
         """
         return self._squares[row]
 
-    def get_subgrid_neighbours(self, row: int, col: int, rows_in_subgrid: int, cols_in_subgrid: int):
+    def get_subgrid_neighbours(self, row, col, rows_in_subgrid, cols_in_subgrid):
         """
         Returns all Squares in a subgrid on the sudoku board.
 
@@ -238,7 +238,7 @@ class Board:
                     subgrid_values.append(self._squares[o_row + r][o_col + c])
         return subgrid_values
 
-    def get_col_neighbours(self, col: int):
+    def get_col_neighbours(self, col):
         """
         Returns a list of Squares representing a full column of the sudoku grid.
 
@@ -301,7 +301,7 @@ class Board:
         return self._cols_in_subgrid
 
     @property
-    def grid(self) -> list[list[int]]:
+    def grid(self):
         """
         Returns the sudoku board as a 2D list of ints.
 
@@ -310,7 +310,7 @@ class Board:
         return self._grid
 
     @property
-    def squares(self) -> list:
+    def squares(self):
         """
         Return a list of all Square objects.
 
@@ -319,7 +319,7 @@ class Board:
         return self._squares
 
     @squares.setter
-    def squares(self, value: list):
+    def squares(self, value):
         """
         Set the Squares on the sudoku board.
 
@@ -328,7 +328,7 @@ class Board:
         self._squares = value
 
     @property
-    def states(self) -> [('Square', int)]:
+    def states(self):
         """
         Returns the state of a square during/after the MAC process.
 
@@ -336,7 +336,7 @@ class Board:
         """
         return self._states
 
-    def add_to_states(self, sq_list: [('Square', int)]):
+    def add_to_states(self, sq_list):
         """
         Add the most recent state of the Square resulting from the MAC process.
 
@@ -344,7 +344,7 @@ class Board:
         """
         self._states.append(sq_list)
 
-    def get_square(self, row: int, col: int) -> Square:
+    def get_square(self, row, col):
         """
         Returns a square object based on its location on the sudoku board.
 
@@ -354,7 +354,7 @@ class Board:
         """
         return self.squares[row][col]
 
-    def update_value(self, square: 'Square', value: int):
+    def update_value(self, square, value):
         """
         Update a Square's value on the 2D list version of the sudoku board.
 
@@ -364,7 +364,7 @@ class Board:
         self.grid[square.row][square.col] = value
         square.assign_value(value)
 
-    def undo_value(self, square: 'Square'):
+    def undo_value(self, square):
         """
         Revert a Square's value to zero on the 2D list version of the sudoku baord.
 
