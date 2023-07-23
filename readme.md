@@ -9,6 +9,14 @@
 
 This project was created for our Introduction to Artificial Intelligence course. It is written in python and implements two algorithms for solving Sudoku puzzles: brute force and constraint satisfaction problem (CSP). The user can choose to load a puzzle from a file or generate a random puzzle. The program will handle puzzles of size 9x9, 12x12(4 rows, 3 columns), 16x16, and 25x25. The user can then choose either algorithm to solve the puzzle. A solution, should one exist, will be displayed along with the time taken to solve the puzzle.
 
+## Running the Program
+
+### Requirements
+1. Python. The latest version can be downloaded and installed from the official Python website (https://www.python.org/)
+
+To run the program simply run the following command: `python3 main.py` and the Tkinter GUI window will open.
+
+
 ## Algorithm Notes
 
 ### Brute Force Algorithm
